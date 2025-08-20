@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fancy Calculator ✨ (Aligned)</title>
+  <style>
+    body {
+      display: flex; justify-content: center; align-items: center;
+      height: 100vh; margin: 0;
+      background: linear-gradient(135deg, #89f7fe, #66a6ff);
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+    }
+    .calculator {
+      background: #fff;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      transform: scale(1);
+      transition: transform 0.3s;
+      width: max-content;
+    }
+    .calculator:hover { transform: scale(1.02); }
+
+    .calculator input {
+      width: 100%;
+      height: 70px;
+      margin-bottom: 20px;
+      text-align: right;
+      font-size: 28px;
+      border: none;
+      background: #f3f3f3;
+      border-radius: 12px;
+      padding: 10px;
+      box-shadow: inset 0 3px 6px rgba(0,0,0,0.15);
+      animation: fadeIn 0.5s ease;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(-10px);}
+      to   {opacity: 1; transform: translateY(0);}
+    }
+
+    .buttons {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(4, 80px);
+      grid-template-rows: repeat(5, 70px);
+      /* Map the keypad explicitly */
+      grid-template-areas:
+        "clear divide multiply minus"
+        "seven eight  nine   plus"
+        "four  five   six    equal"
+        "one   two    three  equal"
+        "zero  zero   dot    equal";
+    }
+
+    button {
+      font-size: 22px; border: none; border-radius: 15px;
+      cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.1s, background 0.2s;
+    }
+    button:active { transform: scale(0.9); }
+    .num { background: #f0f0f0; }      .num:hover { background: #ddd; }
+    .op  { background: #ffd166; }      .op:hover  { background: #ffb347; }
+    .equal { background: #06d6a0; color: white; font-weight: bold; }
+    .equal:hover { background: #04b487; }
+    .clear { background: #000000; color: white; font-weight: bold; }
+    .clear:hover { background: #d93a5a; }
+
+    /* Grid area assignments */
+    .area-clear   { grid-area: clear; }
+    .area-divide  { grid-area: divide; }
+    .area-multiply{ grid-area: multiply; }
+    .area-minus   { grid-area: minus; }
+    .area-seven   { grid-area: seven; }
+    .area-eight   { grid-area: eight; }
+    .area-nine    { grid-area: nine; }
+    .area-plus    { grid-area: plus; }
+    .area-four    { grid-area: four; }
+    .area-five    { grid-area: five; }
+    .area-six     { grid-area: six; }
+    .area-one     { grid-area: one; }
+    .area-two     { grid-area: two; }
+    .area-three   { grid-area: three; }
+    .area-zero    { grid-area: zero; }
+    .area-dot     { grid-area: dot; }
+    .area-equal   { grid-area: equal; } /* spans 3 rows vertically */
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <input type="text" id="display" disabled />
+
+    <div class="buttons">
+      <button onclick="clearDisplay()" class="clear area-clear">C</button>
+      <button onclick="appendValue('/')" class="op area-divide">÷</button>
+      <button onclick="appendValue('*')" class="op area-multiply">×</button>
+      <button onclick="appendValue('-')" class="op area-minus">−</button>
+
+      <button onclick="appendValue('7')" class="num area-seven">7</button>
+      <button onclick="appendValue('8')" class="num area-eight">8</button>
+      <button onclick="appendValue('9')" class="num area-nine">9</button>
+      <button onclick="appendValue('+')" class="op area-plus">+</button>
+
+      <button onclick="appendValue('4')" class="num area-four">4</button>
+      <button onclick="appendValue('5')" class="num area-five">5</button>
+      <button onclick="appendValue('6')" class="num area-six">6</button>
+      <button onclick="calculate()" class="equal area-equal">=</button>
+
+      <button onclick="appendValue('1')" class="num area-one">1</button>
+      <button onclick="appendValue('2')" class="num area-two">2</button>
+      <button onclick="appendValue('3')" class="num area-three">3</button>
+
+      <button onclick="appendValue('0')" class="num area-zero">0</button>
+      <button onclick="appendValue('.')" class="num area-dot">.</button>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById("display");
+
+    function appendValue(value) {
+      display.value += value;
+      animateDisplay();
+    }
+    function clearDisplay() {
+      display.value = "";
+      animateDisplay();
+    }
+    function calculate() {
+      try {
+        // eval is fine for a simple demo (no user input other than buttons)
+        display.value = eval(display.value);
+      } catch {
+        display.value = "Error";
+      }
+      animateDisplay();
+    }
+    function animateDisplay() {
+      display.style.animation = "none";
+      display.offsetHeight; // reset
+      display.style.animation = "fadeIn 0.4s ease";
+    }
+  </script>
+</body>
+</html>
