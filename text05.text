@@ -1,4 +1,13 @@
 eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 git add . (u)
+changes (m) -> re: 02
 git commit -m "name"(a)
-changes (m) re: 02
+git push
+
+search id
+create folder
+vs code open folder
+select
+git clone
+git fetch
+git pull
